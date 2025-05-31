@@ -1,11 +1,13 @@
+import os.path
 from pathlib import Path
 
-from django.conf.global_settings import STATICFILES_DIRS
+
+from django.conf.global_settings import STATICFILES_DIRS, MEDIA_URL, MEDIA_ROOT
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = "django-insecure-+tf2+46*_1q2@hck^i71e+-c_h20%r&bb9l4q-_*6rf+=d)9**"
+SECRET_KEY = os.getenv("secret_key")
 
 
 DEBUG = True
@@ -55,14 +57,15 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "products_online",
+        "USER": "postgres",
+        "PASSWORD": "2407",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -94,3 +97,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = (BASE_DIR / "static",)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_URL = "media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
