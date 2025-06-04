@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "catalog/base.html" %}
 {% load my_tags %}
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for product in products %}
+            {% for product in object_list %}
             <div class="col">
                 <div class="card shadow-sm">
                     <img src="{{ product.image | media_filter }}">
@@ -15,6 +15,12 @@
                             <div class="btn-group">
                                  <a class="btn btn-outline-success" href="{% url 'catalog:product_detail' product.pk %}"
                                    role="button">Описание
+                                </a>
+                                <a class="btn btn-outline-success" href="{% url 'catalog:product_update' product.pk %}"
+                                   role="button">Редактировать
+                                </a>
+                                <a class="btn btn-outline-success" href="{% url 'catalog:product_delete' product.pk %}"
+                                   role="button">Удалить
                                 </a>
                             </div>
                             <small class="text-body-secondary">RUB {{product.price}}</small>
