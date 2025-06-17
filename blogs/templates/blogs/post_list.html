@@ -1,0 +1,80 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+{% load my_tags %}
+{% block content %}
+<div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <svg aria-hidden="true" class="bd-placeholder-img" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="var(--bs-success-bg-subtle)"></rect>
+            </svg>
+            <div class="container">
+            <div class="carousel-caption align-top text-uppercase fst-italic text-dark">
+                <h1>Всё о красоте и здоровье</h1>
+            </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+           <svg aria-hidden="true" class="bd-placeholder-img" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="var(--bs-success-bg-subtle)"></rect>
+            </svg>
+            <div class="container">
+             <div class="carousel-caption align-text-top fst-italic fs-2 text-dark">
+                <p>Делюсь обзорами на декоративную и уходовую косметику</p>
+             </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <svg aria-hidden="true" class="bd-placeholder-img " height="100%" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
+             <rect width="100%" height="100%" fill="var(--bs-success-bg-subtle)"></rect>
+            </svg>
+            <div class="container">
+                <div class="carousel-caption align-text-top fst-italic fs-2 text-dark">
+                <p>Делюсь секретами использования косметики для продления молодости и здоровья</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span> </button> <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span> </button>
+    </div>
+    <div class="container marketing">
+        <div class="row row-cols-3">
+            {% for post in object_list %}
+            <div class="col-lg-4">
+                <img src="{{ post.preview | media_filter }}" class="rounded-circle"
+                     style="width: 140px; height: 140px; object-fit: cover;">
+                <h2 class="fw-normal">{{ post.title }}</h2>
+                <p><a class="btn btn-sm btn-success" href="{% url 'blogs:post_detail' post.pk %}">Читать далее
+                    &raquo;</a></p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    {% for post in object_list %}
+    <hr class="featurette-divider{margin: 80px 0;}">
+    <div class="row featurette align-items-start">
+       <div class="col-md-7 d-flex flex-column">
+          <h2 class="featurette-heading fw-normal mb-3">{{ post.title }}<span
+                  class="text-body-secondary" ></span></h2>
+          <p class="lead">{{ post.content | truncatechars:500}}</p>
+           <a class="btn btn-sm btn-outline-success" href="{% url 'blogs:post_detail' post.pk %}"
+            role="button">Читать
+            </a>
+          
+       </div>
+       <div class="col-md-5">
+           <img src="{{ post.preview | media_filter }}"
+                class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid width: 300px;
+ height: 500px"
+               height="300" role="img" width="500">
+       </div>
+    </div>
+    {% endfor %}
+{% endblock %}
+
