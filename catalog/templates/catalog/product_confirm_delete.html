@@ -1,4 +1,4 @@
-{% extends "blog/base_blog.html" %}
+{% extends "catalog/base.html" %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -10,7 +10,7 @@
                         {% csrf_token %}
                     </div>
                     <button type="submit" class="btn btn-primary">Удалить</button>
-                    <a class="btn btn-primary" href="{% url 'blog:post_list' %}"
+                    <a class="btn btn-primary" href="{% url 'catalog:product_list' %}"
                                    role="button">Отменить
                     </a>
                 </div>

@@ -1,18 +1,15 @@
-{% extends "blogs/base_blogs.html" %}
+{% extends "catalog/base.html" %}
 {% block content %}
 <div class="container-fluid" style="margin-top: 100px;">
     <div class="row">
-        <div class="col">
+        <div class="col-4">
             <form class="row" method="post" enctype="multipart/form-data">
                 <div class="card">
                     <div class="card-body">
                         {% csrf_token %}
                         {{ form.as_p }}
                     </div>
-                    <button type="submit" class="btn btn-outline-secondary">Сохранить изменения</button>
-                    <a class="btn btn-outline-secondary" href="{% url 'blogs:post_list' %}"
-                           role="button">Отменить изменения
-                    </a>
+                    <button type="submit" class="btn btn-success">Войти</button>
                 </div>
             </form>
         </div>
