@@ -27,7 +27,7 @@ class Post(models.Model):
     )
 
     publication_sign = models.BooleanField(
-        default = False,
+        default=False,
         verbose_name="Признак публикации",
     )
 
@@ -40,7 +40,6 @@ class Post(models.Model):
     class Meta:
         verbose_name = "запись"
         verbose_name_plural = "записи"
-
 
     def __str__(self):
         return self.title
