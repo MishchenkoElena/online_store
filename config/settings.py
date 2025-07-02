@@ -2,12 +2,20 @@ import os.path
 from pathlib import Path
 
 
-from django.conf.global_settings import STATICFILES_DIRS, MEDIA_URL, MEDIA_ROOT
+from django.conf.global_settings import (
+    STATICFILES_DIRS,
+    MEDIA_URL,
+    MEDIA_ROOT,
+    AUTH_USER_MODEL,
+    LOGIN_REDIRECT_URL,
+    LOGOUT_REDIRECT_URL,
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os.getenv("secret_key")
+SECRET_KEY = "django-insecure-+tf2+46*_1q2@hck^i71e+-c_h20%r&bb9l4q-_*6rf+=d)9**"
+# os.getenv("secret_key")
 
 
 DEBUG = True
@@ -24,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "catalog",
     "blogs",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -93,7 +102,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = (BASE_DIR / "static",)
 
@@ -102,3 +111,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_URL = "media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+AUTH_USER_MODEL = "users.User"
+
+LOGIN_REDIRECT_URL = "/"
+
+LOGOUT_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = "mishchenko.elen@yandex.ru"
+EMAIL_HOST_PASSWORD = "ybkliyqzhghmamnr"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
