@@ -1,5 +1,4 @@
 from django.forms import ModelForm, BooleanField
-from django.core.exceptions import ValidationError
 
 from blogs.models import Post
 

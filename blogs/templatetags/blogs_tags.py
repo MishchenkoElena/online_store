@@ -1,5 +1,4 @@
 from django import template
-from django.core.checks import register
 
 register = template.Library()
 
