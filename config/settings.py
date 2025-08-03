@@ -14,8 +14,7 @@ from django.conf.global_settings import (
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = "django-insecure-+tf2+46*_1q2@hck^i71e+-c_h20%r&bb9l4q-_*6rf+=d)9**"
-# os.getenv("secret_key")
+SECRET_KEY = os.getenv("secret_key")
 
 
 DEBUG = True
