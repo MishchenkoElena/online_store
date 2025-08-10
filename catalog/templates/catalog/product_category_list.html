@@ -1,0 +1,57 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<h3 style="color: green;">Категория: {{ category.name }}</h3>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in products %}
+                {% if product.is_published or perms.catalog.can_unpublish_product %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="{{ product.image.url }}">
+                            <div class="card-body">
+                                <p class="card-text">{{ product.name }}</p>
+                                <p class="card-text">{{ product.description | truncatechars:100}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-success" href="{% url 'catalog:product_detail' product.pk %}"
+                                           role="button">Описание
+                                        </a>
+                                        {% if perms.catalog.can_unpublish_product or user == product.owner %}
+                                            <a class="btn btn-outline-success" href="{% url 'catalog:product_update' product.pk %}"
+                                               role="button">Редактировать
+                                            </a>
+                                        {% endif %}
+                                        {% if perms.catalog.can_delete_product or user == product.owner %}
+                                            <a class="btn btn-outline-success" href="{% url 'catalog:product_delete' product.pk %}"
+                                               role="button">Удалить
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <small class="text-body-secondary">RUB {{product.price}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif perms.catalog.can_unpublish_product %}
+                    <!-- Отображение только заголовка для модераторов в черновиках -->
+                    <div class="col">
+                        <div class="card shadow-sm bg-warning">
+                            <div class="card-body">
+                                <p class="card-text text-dark">Черновик: {{ product.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="btn-group text-center">
+    <a class="btn btn-success" href="{% url 'catalog:product_list' %}"
+       role="button">Вернуться в каталог
+    </a>
+</div>
+{% endblock %}

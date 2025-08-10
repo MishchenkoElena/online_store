@@ -25,7 +25,7 @@ class PostDetailView(DetailView):
 class PostCreateView(CreateView):
     model = Post
     form_class = PostForm
-reverse_lazy("blogs:post_list")
+    success_url = reverse_lazy("blogs:post_list")
 
 
 class PostUpdateView(UpdateView):
