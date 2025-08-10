@@ -1,11 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy, reverse
 
 from catalog.forms import ProductForm, ProductModeratorForm
-from catalog.models import Product
+from catalog.models import Product, Category
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
+
+from catalog.services import get_products_category
 
 
 class ProductListView(ListView):
@@ -16,6 +19,11 @@ class ProductListView(ListView):
         if user.has_perm("catalog.can_unpublish_product") or user.is_staff:
             return Product.objects.all()
         return Product.objects.filter(is_published=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -72,3 +80,34 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
         ):
             return super().dispatch(request, *args, **kwargs)
         return HttpResponseForbidden()
+
+
+class ProductsCategoryListView(ListView):
+    model = Product
+    template_name = "catalog/product_category_list.html"
+    context_object_name = "products"
+
+    def get_queryset(self):
+        category_id = self.kwargs["category_id"]
+        self.category = get_object_or_404(Category, id=category_id)
+        return get_products_category(category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = self.category
+        return context
+
+    def base_view(request):
+        categories = Category.objects.all()
+        return render(request, "base.html", {"categories": categories})
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = "catalog/base.html"
+    context_object_name = "categories"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context

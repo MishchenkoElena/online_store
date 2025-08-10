@@ -87,10 +87,32 @@
                   <p>
                      {% if user.is_authenticated %}
                      <a class="btn btn-success" href="{% url 'catalog:product_create' %}"
-                                 role="button">Добавить товар
+                       role="button">Добавить товар
                      </a>
                      {% endif %}
                   </p>
+                  {% block categories %}
+                  <li class="nav-link dropdown-item link-success">
+                     <button class="btn active btn-success dropdown-toggle" id="categoryMenu"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Категории товаров
+                     </button>
+                     <ul class="dropdown-menu dropdown-menu-success">
+                        {% if categories %}
+                            {% for category in categories %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'catalog:product_category' category.id %}">
+                            {{ category.name }}
+                            </a>
+                        </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="dropdown-item">Нет категорий</li>
+                        {% endif %}
+                     </ul>
+                  </li>
+                  {% endblock %}
                </div>
             </div>
          </section>
